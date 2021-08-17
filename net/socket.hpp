@@ -35,17 +35,28 @@ namespace net {
 
 		void bind(const char* _addr);
 
-		void listen(int backlog = SOMAXCONN);
+		void listen(int backlog);
 
-		void connect(const char* addr, u_short _port);
+		void connect(void);
 
-		socket& accept();
+		void connect(u_short _port);
+
+		void connect(const char* _addr);
+
+		void connect(const char* _addr, u_short _port);
+
+		socket& accept(void);
 
 		void makeSocket(void);
 	public:
-		const char* recv(int len = 8192, int flag = 0);
+		const char* recv(int flag);
 
-		void send(const char* str, int flag = 0);
+		void send(const char* str, int flag);
+	private:
+		void err(const char* str);
+	private:
+		bool isSetAddr;
+		bool isSetPort;
 	private:
 		u_short family;
 		u_short proto;
