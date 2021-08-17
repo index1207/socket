@@ -46,7 +46,7 @@ void net::socket::bind(const char* _addr) {
     ::bind(s, (SOCKADDR*)&addr, sizeof(addr));
 }
 
-void net::socket::listen(int backlog = SOMAXCONN) {
+void net::socket::listen(int backlog) {
     if(::listen(s, backlog) != 0) {
         this->err("listen error");
     }
@@ -106,11 +106,11 @@ void net::socket::makeSocket(void) {
 	}
 }
 
-void net::socket::send(const char* str, int flag = 0) {
+void net::socket::send(const char* str, int flag) {
     ::send(s, str, strlen(str)+1, 0);
 }
 
-const char* net::socket::recv(int flag = 0) {
+const char* net::socket::recv(int flag) {
     char buf[8192];
     ZeroMemory(buf, 8192);
 

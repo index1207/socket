@@ -35,7 +35,7 @@ namespace net {
 
 		void bind(const char* _addr);
 
-		void listen(int backlog);
+		void listen(int backlog = SOMAXCONN);
 
 		void connect(void);
 
@@ -49,9 +49,9 @@ namespace net {
 
 		void makeSocket(void);
 	public:
-		const char* recv(int flag);
+		const char* recv(int flag = 0);
 
-		void send(const char* str, int flag);
+		void send(const char* str, int flag = 0);
 	private:
 		void err(const char* str);
 	private:
