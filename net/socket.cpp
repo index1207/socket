@@ -20,17 +20,16 @@ net::socket::socket(u_short _family, int _proto) : family(_family), proto(_proto
 net::socket::~socket() {
 	closesocket(s);
 }
-
-void net::socket::err(const char* str) {
-    MessageBoxA(nullptr, str, "ERROR", MB_OK | MB_ICONERROR);
-}
-
 inline void net::socket::setFamily(u_short _family) {
 	this->family = _family;
 }
 
 inline void net::socket::setAddr(const char* addr) {
 	inet_pton(family, addr, &this->addr.sin_addr);
+}
+
+inline void net::socket::setAddr(ULONG addr) {
+	this->addr.sin_addr.s_addr = htonl(addr);
 }
 
 inline void net::socket::setPort(u_short _port) {
@@ -41,14 +40,8 @@ void net::socket::bind() {
     ::bind(s, (SOCKADDR*)&addr, sizeof(addr));
 }
 
-void net::socket::bind(const char* _addr) {
-    this->setAddr(_addr);
-    ::bind(s, (SOCKADDR*)&addr, sizeof(addr));
-}
-
 void net::socket::listen(int backlog) {
     if(::listen(s, backlog) != 0) {
-        this->err("listen error");
     }
 }
 
@@ -57,7 +50,7 @@ void net::socket::connect(void) {
         ::connect(s, (SOCKADDR*)&addr, sizeof(addr));
     }
     else {
-        this->err("Does not set address and port number.");
+        
     }
 }
 
@@ -68,7 +61,6 @@ void net::socket::connect(const char* _addr) {
         ::connect(s, (SOCKADDR*)&addr, sizeof(addr));
     }
     else {
-        this->err("Does not set port number.");
     }
 }
 
@@ -79,7 +71,6 @@ void net::socket::connect(u_short _port) {
         ::connect(s, (SOCKADDR*)&addr, sizeof(addr));
     }
     else {
-        this->err("Does not set address.");
     }
 }
 

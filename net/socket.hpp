@@ -29,11 +29,11 @@ namespace net {
 
 		inline void setAddr(const char* addr);
 
+		inline void setAddr(ULONG addr);
+
 		inline void setPort(u_short _port);
 
 		void bind();
-
-		void bind(const char* _addr);
 
 		void listen(int backlog = SOMAXCONN);
 
@@ -52,8 +52,6 @@ namespace net {
 		const char* recv(int flag = 0);
 
 		void send(const char* str, int flag = 0);
-	private:
-		void err(const char* str);
 	private:
 		bool isSetAddr;
 		bool isSetPort;
